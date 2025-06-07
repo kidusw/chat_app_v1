@@ -5,9 +5,10 @@ import bcrypt from "bcryptjs";
 
 export const signup = async(req,res)=>{
     try {
-        const{fullname,email,password}=req.body;
+        const{fullName,email,password}=req.body;
+        console.log(req.body);
 
-        if(!fullname || !email || !password) return res.status(400).json({message:"you should fill out all fields"});
+        if(!fullName || !email || !password) return res.status(400).json({message:"you should fill out all fields"});
 
         if(password.length < 5){
             return res.status(400).json({message:"Password must be at least 6 characters"})
@@ -21,7 +22,7 @@ export const signup = async(req,res)=>{
         const hashedPassword = await bcrypt.hash(password,salt);
 
         const newUser = await User({
-            fullname:fullname,
+            fullname:fullName,
             email:email,
             password:hashedPassword
         })
