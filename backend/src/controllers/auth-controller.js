@@ -27,14 +27,11 @@ export const signup = async(req,res)=>{
             password:hashedPassword
         })
 
-    
-    
         if(newUser){
             // generate jwt token
             generateToken(newUser._id,res);
             await newUser.save();
-           
-
+        
             res.status(201).json({message:'user created',
                 _id:newUser._id,
                 fullname:newUser.fullname,
@@ -91,12 +88,16 @@ export const updateProfile = async(req,res)=>{
     try {
         const {profilePic} = req.body;
         const userId=req.user._id
+       
         if(!profilePic) return res.status(400).json({message:"Profile pic required"})
           
          const uploadResponse= await cloudinary.uploader.upload(profilePic); 
          
          const updatedUser = await User.findByIdAndUpdate(userId,
             {profilePic:uploadResponse.secure_url},{new:true});
+
+            console.log("upload response:",uploadResponse);
+            console.log("user data",updatedUser)
 
         res.status(200).json(updatedUser);
     } catch (error) {

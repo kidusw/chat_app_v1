@@ -12,7 +12,7 @@ export const protectRoute = async(req,res,next)=>{
 
         if(!decoded) return res.status(401).json({message:"token is invalid"});
 
-        console.log(decoded.userId);
+        
 
         const user = await User.findById(decoded.userId)
 
