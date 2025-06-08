@@ -18,7 +18,7 @@ app.use(cors({
 }));
 
 app.use('/api/auth',authRoutes);
-app.use('/api/auth',messageRoutes);
+app.use('/api/messages',messageRoutes);
 
 app.listen(PORT,()=>{
     console.log(`server is running on ${PORT}`)
